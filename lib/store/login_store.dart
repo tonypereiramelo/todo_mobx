@@ -12,6 +12,11 @@ abstract class _LoginStore with Store {
   String password = '';
   @action
   void setPassword(String value) => password = value;
+  @observable
+  bool showPassword = false;
+  @action
+  void setShowPassword() => showPassword = !showPassword;
+
   @computed
   bool get isValidPassword => password.length >= 6;
   @computed

@@ -13,11 +13,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginStore loginStore = LoginStore();
+  ReactionDisposer disposer;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    reaction((_) => loginStore.loggedIn, (loggedIn) {
+    disposer = reaction((_) => loginStore.loggedIn, (loggedIn) {
       if (loggedIn)
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -106,5 +107,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    disposer();
+    super.dispose();
   }
 }

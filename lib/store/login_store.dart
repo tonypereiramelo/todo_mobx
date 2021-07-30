@@ -12,4 +12,10 @@ abstract class _LoginStore with Store {
   String password = '';
   @action
   void setPassword(String value) => password = value;
+  @computed
+  bool get isValidPassword => password.length >= 6;
+  @computed
+  bool get isValidEmail => email.contains('@') && email.contains('.com');
+  @computed
+  bool get isValidForm => isValidEmail && isValidPassword;
 }

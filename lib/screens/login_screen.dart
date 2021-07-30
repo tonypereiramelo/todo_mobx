@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todomobx/store/login_store.dart';
 import 'package:todomobx/widgets/custom_icon_button.dart';
 import 'package:todomobx/widgets/custom_text_field.dart';
@@ -54,28 +55,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 16,
                     ),
-                    SizedBox(
-                      height: 44,
-                      child: ElevatedButton(
-                        child: Text(
-                          'Login',
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
+                    Observer(builder: (_) {
+                      return SizedBox(
+                        height: 44,
+                        child: ElevatedButton(
+                          child: Text(
+                            'Login',
                           ),
-                          onPrimary: Colors.white,
-                          primary: Theme.of(context).primaryColor,
-                          onSurface:
-                              Theme.of(context).primaryColor.withAlpha(100),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                            onPrimary: Colors.white,
+                            primary: Theme.of(context).primaryColor,
+                            onSurface:
+                                Theme.of(context).primaryColor.withAlpha(100),
+                          ),
+                          onPressed: loginStore.isValidForm
+                              ? () {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => ListScreen()));
+                                }
+                              : null,
                         ),
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => ListScreen()));
-                        },
-                      ),
-                    )
+                      );
+                    })
                   ],
                 ),
               )),

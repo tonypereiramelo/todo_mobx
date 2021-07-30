@@ -4,8 +4,6 @@ import 'package:todomobx/store/login_store.dart';
 import 'package:todomobx/widgets/custom_icon_button.dart';
 import 'package:todomobx/widgets/custom_text_field.dart';
 
-import 'list_screen.dart';
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -30,13 +28,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    CustomTextField(
-                      hint: 'E-mail',
-                      prefix: Icon(Icons.account_circle),
-                      textInputType: TextInputType.emailAddress,
-                      onChanged: loginStore.setEmail,
-                      enabled: true,
-                    ),
+                    Observer(builder: (_) {
+                      return CustomTextField(
+                        hint: 'E-mail',
+                        prefix: Icon(Icons.account_circle),
+                        textInputType: TextInputType.emailAddress,
+                        onChanged: loginStore.setEmail,
+                        enabled: !loginStore.loading,
+                      );
+                    }),
                     const SizedBox(
                       height: 16,
                     ),
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefix: Icon(Icons.lock),
                         obscure: !loginStore.showPassword,
                         onChanged: loginStore.setPassword,
-                        enabled: true,
+                        enabled: !loginStore.loading,
                         suffix: CustomIconButton(
                           radius: 32,
                           iconData: loginStore.showPassword
@@ -63,9 +63,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       return SizedBox(
                         height: 44,
                         child: ElevatedButton(
-                          child: Text(
-                            'Login',
-                          ),
+                          child: loginStore.loading
+                              ? CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                )
+                              : Text(
+                                  'Login',
+                                ),
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32),
@@ -75,13 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onSurface:
                                 Theme.of(context).primaryColor.withAlpha(100),
                           ),
-                          onPressed: loginStore.isValidForm
-                              ? () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => ListScreen()));
-                                }
-                              : null,
+                          onPressed: loginStore.loginPressed,
                         ),
                       );
                     })

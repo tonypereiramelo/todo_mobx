@@ -4,7 +4,6 @@ import 'package:todomobx/screens/login_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,8 +11,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.deepPurpleAccent,
-        cursorColor: Colors.deepPurpleAccent,
         scaffoldBackgroundColor: Colors.deepPurpleAccent,
+        textSelectionTheme:
+            TextSelectionThemeData(cursorColor: Colors.deepPurpleAccent),
       ),
       home: LoginScreen(),
     );

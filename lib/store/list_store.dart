@@ -18,6 +18,7 @@ abstract class _ListStoreBase with Store {
 
   @action
   void addTodoList() {
-    todoList.add(TodoStore(newTodoTitle));
+    todoList.insert(0, TodoStore(newTodoTitle));
+    newTodoTitle = '';
   }
 }

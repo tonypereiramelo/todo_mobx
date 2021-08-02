@@ -11,7 +11,8 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  ListStore listStore = ListStore();
+  final ListStore listStore = ListStore();
+  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +60,17 @@ class _ListScreenState extends State<ListScreen> {
                         Observer(
                           builder: (_) {
                             return CustomTextField(
+                              controller: controller,
                               hint: 'Tarefa',
                               onChanged: listStore.setNewTodoTitle,
                               suffix: listStore.isFormValid
                                   ? CustomIconButton(
                                       radius: 32,
                                       iconData: Icons.add,
-                                      onTap: listStore.addTodoList,
+                                      onTap: () {
+                                        listStore.addTodoList();
+                                        controller.clear();
+                                      },
                                     )
                                   : null,
                             );
@@ -81,11 +86,23 @@ class _ListScreenState extends State<ListScreen> {
                                 itemCount: listStore.todoList.length,
                                 itemBuilder: (_, index) {
                                   final todo = listStore.todoList[index];
-                                  return ListTile(
-                                    title: Text(
-                                      todo.title,
-                                    ),
-                                    onTap: todo.toggleDone,
+                                  return Observer(
+                                    builder: (_) {
+                                      return ListTile(
+                                        title: Text(
+                                          todo.title,
+                                          style: TextStyle(
+                                            decoration: todo.done
+                                                ? TextDecoration.lineThrough
+                                                : null,
+                                            color: todo.done
+                                                ? Colors.grey
+                                                : Colors.black,
+                                          ),
+                                        ),
+                                        onTap: todo.toggleDone,
+                                      );
+                                    },
                                   );
                                 },
                                 separatorBuilder: (_, __) {

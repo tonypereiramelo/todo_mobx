@@ -12,4 +12,11 @@ abstract class _ListStoreBase with Store {
 
   @computed
   bool get isFormValid => newTodoTitle.isNotEmpty;
+
+  @observable
+  List<String> todoList = [];
+  @action
+  void addTodoList() {
+    todoList = List.from(todoList..add(newTodoTitle));
+  }
 }

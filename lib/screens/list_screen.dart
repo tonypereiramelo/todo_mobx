@@ -66,7 +66,7 @@ class _ListScreenState extends State<ListScreen> {
                                   ? CustomIconButton(
                                       radius: 32,
                                       iconData: Icons.add,
-                                      onTap: () {},
+                                      onTap: listStore.addTodoList,
                                     )
                                   : null,
                             );
@@ -76,18 +76,22 @@ class _ListScreenState extends State<ListScreen> {
                           height: 8,
                         ),
                         Expanded(
-                          child: ListView.separated(
-                            itemCount: 10,
-                            itemBuilder: (_, index) {
-                              return ListTile(
-                                title: Text(
-                                  'Item $index',
-                                ),
-                                onTap: () {},
+                          child: Observer(
+                            builder: (_) {
+                              return ListView.separated(
+                                itemCount: listStore.todoList.length,
+                                itemBuilder: (_, index) {
+                                  return ListTile(
+                                    title: Text(
+                                      listStore.todoList[index],
+                                    ),
+                                    onTap: () {},
+                                  );
+                                },
+                                separatorBuilder: (_, __) {
+                                  return Divider();
+                                },
                               );
-                            },
-                            separatorBuilder: (_, __) {
-                              return Divider();
                             },
                           ),
                         ),

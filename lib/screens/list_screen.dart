@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todomobx/store/list_store.dart';
 import 'package:todomobx/widgets/custom_icon_button.dart';
 import 'package:todomobx/widgets/custom_text_field.dart';
-
 import 'login_screen.dart';
 
 class ListScreen extends StatefulWidget {

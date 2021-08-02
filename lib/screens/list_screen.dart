@@ -83,7 +83,7 @@ class _ListScreenState extends State<ListScreen> {
                                 itemBuilder: (_, index) {
                                   return ListTile(
                                     title: Text(
-                                      listStore.todoList[index],
+                                      listStore.todoList[index].toString(),
                                     ),
                                     onTap: () {},
                                   );

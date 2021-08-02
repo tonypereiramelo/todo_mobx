@@ -86,7 +86,7 @@ class _ListScreenState extends State<ListScreen> {
                                     title: Text(
                                       todo.title,
                                     ),
-                                    onTap: () {},
+                                    onTap: todo.toggleDone,
                                   );
                                 },
                                 separatorBuilder: (_, __) {
